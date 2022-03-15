@@ -64,9 +64,8 @@ class NU20Editor:
     def openNU20(self):
         try:
             filePath = filedialog.askopenfilename(filetypes = (("Bionicle Heroes NU20", "*.nup *.hgp"), ("All Files", "*.*")))
-            if (filePath):
-                self.fileName = os.path.basename(filePath)
             f = open(filePath, "rb")
+            self.fileName = os.path.basename(filePath)
             magic = struct.unpack("<I", f.read(4))[0]
             if magic == 0x3032554E:
                 f.seek(0x00, os.SEEK_SET)
