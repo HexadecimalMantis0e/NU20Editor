@@ -13,7 +13,7 @@ class NU20Editor:
         self.fileMenu = tk.Menu(self.menuBar, tearoff = 0)
         self.fileMenu.add_command(label = "Open NU20", command = lambda: self.openNU20())
         self.fileMenu.add_command(label = "Save NU20", state = "disabled", command = lambda: self.saveNU20())
-        self.fileMenu.add_command(label = "Extract Texture", state = "disabled", command = lambda: self.saveTexture())
+        self.fileMenu.add_command(label = "Extract Texture", state = "disabled", command = lambda: self.extractTexture())
         self.menuBar.add_cascade(label = "File", menu = self.fileMenu)
         self.editMenu = tk.Menu(self.menuBar, tearoff = 0)
         self.editMenu.add_command(label = "Replace Texture", state = "disabled", command = lambda: self.replaceTexture())
@@ -213,7 +213,7 @@ class NU20Editor:
             filePath.write(self.fb.read())
             filePath.close()
 
-    def saveTexture(self):
+    def extractTexture(self):
         filePath = filedialog.asksaveasfile(mode = "wb", initialfile = str(self.ddsNumber) + ".dds", defaultextension = ".dds", filetypes = (("DDS image", "*.dds"), ("All Files", "*.*")))
 
         if filePath:
