@@ -8,13 +8,12 @@ import io
 class NU20Editor:
     def __init__(self, window):
         window.title("NU20Editor")
-        window.bind("<B1-Motion>", self.moveTextureEvent)
         self.currentTexture = None
         self.menuBar = tk.Menu(window)
         self.fileMenu = tk.Menu(self.menuBar, tearoff = 0)
         self.fileMenu.add_command(label = "Open NU20", command = lambda: self.openNU20())
         self.fileMenu.add_command(label = "Save NU20", state = "disabled", command = lambda: self.saveNU20())
-        self.fileMenu.add_command(label = "Save Texture", state = "disabled", command = lambda: self.saveTexture())
+        self.fileMenu.add_command(label = "Extract Texture", state = "disabled", command = lambda: self.saveTexture())
         self.menuBar.add_cascade(label = "File", menu = self.fileMenu)
         self.editMenu = tk.Menu(self.menuBar, tearoff = 0)
         self.editMenu.add_command(label = "Replace Texture", state = "disabled", command = lambda: self.replaceTexture())
@@ -45,6 +44,7 @@ class NU20Editor:
         self.canvasFrame.grid(row = 0, column = 1)
         self.textureCanvas = tk.Canvas(self.canvasFrame, bg = "gray", highlightthickness = 0, height = 522, width = 522)
         self.textureCanvas.grid(row = 0, column = 0)
+        self.textureCanvas.bind("<B1-Motion>", self.moveTextureEvent)
 
     def clearData(self):
         self.fb = io.BytesIO()
@@ -58,7 +58,7 @@ class NU20Editor:
         self.addressLabel.config(text = "Address: ")
         self.textureCanvas.delete("all")
         self.fileMenu.entryconfig("Save NU20", state = "disabled")
-        self.fileMenu.entryconfig("Save Texture", state = "disabled")
+        self.fileMenu.entryconfig("Extract Texture", state = "disabled")
         self.editMenu.entryconfig("Replace Texture", state = "disabled")
 
     def openNU20(self):
@@ -154,7 +154,7 @@ class NU20Editor:
                     self.imageList.append(entryAddress)
             # enable the menuBar options
             self.fileMenu.entryconfig("Save NU20", state = "active")
-            self.fileMenu.entryconfig("Save Texture", state = "active")
+            self.fileMenu.entryconfig("Extract Texture", state = "active")
             self.editMenu.entryconfig("Replace Texture", state = "active")
             # Init the dropdown
             for i in range(0, len(self.imageList)):
